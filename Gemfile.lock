@@ -1,0 +1,10 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    parseconfig (1.0.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  parseconfig (~> 1.0.2)
