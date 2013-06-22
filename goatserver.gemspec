@@ -1,10 +1,10 @@
 $LOAD_PATH.push File.expand_path("../lib", __FILE__)
-require 'goat/version'
+require 'goatserver/version'
 
 
 Gem::Specification.new do |s|
-  s.name          = "goat"
-  s.version       = Goat::VERSION
+  s.name          = "goatserver"
+  s.version       = "0.0.0" 
   s.authors       = ["Filippos Vasilakis"]
   s.email         = ["vasilakisfil@gmail.com"]
 

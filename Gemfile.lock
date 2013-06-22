@@ -1,14 +1,14 @@
 PATH
   remote: .
   specs:
-    goat_server (0.0.0)
+    goatserver (0.0.0)
 
 GEM
   remote: http://rubygems.org/
   specs:
     diff-lcs (1.2.4)
     parseconfig (1.0.2)
-    rake (10.0.4)
+    rake (10.1.0)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -22,7 +22,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  goat_server!
+  goatserver!
   parseconfig (~> 1.0.2)
   rake
   rspec

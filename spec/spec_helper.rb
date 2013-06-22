@@ -7,7 +7,7 @@
 require 'rubygems'
 require 'bundler/setup'
 
-require 'goat'
+require 'goatserver'
 
 
 RSpec.configure do |config|
