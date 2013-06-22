@@ -1,7 +1,8 @@
 require 'socket'
 require 'parseconfig'
 
-class GoatServer
+
+class Goat
   attr_reader :serverRoot, :port
 
   def initialize(port, configPath=nil)
@@ -31,5 +32,5 @@ class GoatServer
   end
 end
 
-gs = GoatServer.new 5000
+gs = Goat.new 5000
 gs.start
