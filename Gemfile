@@ -3,4 +3,5 @@ gemspec
 
 gem 'rake'
 gem 'rspec'
-gem "parseconfig", "~> 1.0.2"
+gem 'parseconfig'
+gem 'rest-client'

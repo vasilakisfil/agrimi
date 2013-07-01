@@ -3,16 +3,11 @@ require 'parseconfig'
 
 
 class Goatserver
-  attr_reader :serverRoot, :port
+  attr_reader :configPath, :serverRoot, :port
 
-  def initialize(port, configPath=nil)
+  def initialize(port)
     @port = port
-    if !configPath
-      configPath = "goat.conf"
-    end
-
-    config = ParseConfig.new(configPath)
-    serverRoot = config['serverRoot']
+    @serverRoot = "/home/vasilakisfil/Development/goat/spec/serverAssets"
   end
 
   def start
@@ -28,6 +23,14 @@ class Goatserver
     end
 
     puts request
+    file = File.open "#{@serverRoot }/index.html"
+    client.puts "HTTP/1.1 200 OK\r\nDate: Tue, 14 Dec 2010 10:48:45 GMT\r\n
+                Server: RubyrnContent-Type: text/html;
+                charset=iso-8859-1\r\n\r\n"
+    client.puts file.read
+    file.rewind
+    puts file.read
+    file.close
     client.close
   end
 end
