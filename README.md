@@ -1,6 +1,6 @@
 #GoatServer
 
-A very simple evented or threaded web server.
+A very simple threaded web server.
 
 
 ###ToDo

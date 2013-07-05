@@ -4,18 +4,28 @@ require 'rest-client'
 
 
 
-describe "AnswerActor" do
-  before do
+describe "Request" do
+  before(:all) do
+    good_req_str = "GET /index.html HTTP/1.1\n"
+    good_req_str += "Host: www.example.com\r\n"
+    @good_req = Request.new(good_req_str)
 
+    bad_req_str_meth = "MEH /index.html HTTP/1.1\n"
+    bad_req_str_meth += "Host: www.example.com\r\n"
+    @bad_req_meth = Request.new(bar_req_str_meth)
   end
 
-  context "with valid client" do
-
-
+  context "with valid data" do
+    it "splits them accordingly" do
+      expect(@good_req.type).to eq('GET')
+      expect(@good_req.url).to eq('/index.html')
+    end
   end
 
+  context "with invalid data" do
+    pending "write test!"
+  end
 end
-
 
 describe "Goatserver" do
 
