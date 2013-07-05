@@ -12,7 +12,7 @@ describe "Request" do
 
     bad_req_str_meth = "MEH /index.html HTTP/1.1\n"
     bad_req_str_meth += "Host: www.example.com\r\n"
-    @bad_req_meth = Request.new(bar_req_str_meth)
+    @bad_req_meth = Request.new(bad_req_str_meth)
   end
 
   context "with valid data" do
@@ -31,7 +31,7 @@ describe "Goatserver" do
 
   before(:all) do
     @serverAssets = "#{Dir.getwd}/spec/serverAssets"
-    @port = 5060
+    @port = 5061
     # configFilePath = "#{Dir.getwd}/spec/serverAssets/goat.conf"
     @server = Goatserver.new(@port)
     Thread.new { @server.start }
