@@ -13,15 +13,20 @@ class Goatserver
   end
 
   def start
+    puts "Opening server"
     @server = TCPServer.new(@port)
     client = nil
-    loop {
+    loop do
       answerWorker = AnswerWorker.new
       client = @server.accept
-
       # Initiate new Actor to handle the request
       answerWorker.start(client)
-    }
+    end
+    stop
+  end
+
+  def stop
+    puts "Closing server"
     @server.close
   end
 end

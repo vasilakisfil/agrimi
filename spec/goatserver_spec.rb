@@ -12,29 +12,38 @@ describe "Request" do
 
     bad_req_str_meth = "MEH /index.html HTTP/1.1\n"
     bad_req_str_meth += "Host: www.example.com\r\n"
-    @bad_req_meth = Request.new(bad_req_str_meth)
+    @bad_req = Request.new(bad_req_str_meth)
   end
 
   context "with valid data" do
     it "splits them accordingly" do
       expect(@good_req.type).to eq('GET')
       expect(@good_req.url).to eq('/index.html')
+      expect(@good_req.valid?).to be_true
     end
   end
 
   context "with invalid data" do
-    pending "write test!"
+    it "returns false #valid?" do
+      expect(@bad_req.valid?).to be_false
+    end
   end
 end
 
 describe "Goatserver" do
 
-  before(:all) do
+  before :all do
     @serverAssets = "#{Dir.getwd}/spec/serverAssets"
-    @port = 5061
+    @port = 5555
     # configFilePath = "#{Dir.getwd}/spec/serverAssets/goat.conf"
     @server = Goatserver.new(@port)
     Thread.new { @server.start }
+    # wait for server to initialize
+    sleep(1)
+  end
+
+  after :all do
+    @server.stop
   end
 
   context "with full initializer" do
