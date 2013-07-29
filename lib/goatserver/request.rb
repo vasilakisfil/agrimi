@@ -68,13 +68,27 @@ class Request
         header_fields[:If_Unmodified_Since] = line.split(/^If-Unmodified-Since:\s/)[1]
       when /^Max-Forwards:\s/
         header_fields[:Max_Forwards] = line.split(/^Max-Forwards:\s/)[1]
-      when /^User-Agent:\s/
-        header_fields[:User_Agent] = line.split(/^User-agent\s/)[1]
+      when /^Origin:\s/
+        header_fields[:Origin] = line.split(/^Origin:\s/)[1]
+      when /^Pragma:\s/
+        header_fields[:Pragma] = line.split(/^Pragma:\s/)[1]
+      when /^Proxy-Authorization:\s/
+        header_fields[:Proxy_Authorization] = line.split(/^Proxy-Authorization:\s/)[1]
+      when /^Range:\s/
+        header_fields = line.split(/^Range:\s/)[1]
       # officialy mispelled
       when /^Referer:\s/
-        header_fields[:Referer] = line.split(/^Referer\s/)[1]
-      when /^Accept-Language:\s/
-        header_fields[:Accept_language] = line.split(/^Accept-language\s/)[1]
+        header_fields[:Referer] = line.split(/^Referer:\s/)[1]
+      when /^TE:\s/
+        header_fields[:TE] = line.split(/^TE\s/)[1]
+      when /^Upgrade\s/
+        header_fields[:Upgrade] = line.split(/^Upgrade:\s/)[1]
+      when /^User-Agent:\s/
+        header_fields[:User_Agent] = line.split(/^User-Agent:\s/)[1]
+      when /^Via:\s/
+        header_fields[:Via] = line.split(/^Via:\s/)[1]
+      when /^Warning:\s/
+        header_fields[:Warning] = line.split(/^Warning:\s/)[1]
       end
     end
   end

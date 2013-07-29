@@ -17,8 +17,8 @@ describe "Request" do
 
   context "with valid data" do
     it "splits them accordingly" do
-      expect(@good_req.type).to eq('GET')
-      expect(@good_req.url).to eq('/index.html')
+      expect(@good_req.method).to eq('GET')
+      expect(@good_req.request_uri).to eq('/index.html')
       expect(@good_req.valid?).to be_true
     end
   end

@@ -36,7 +36,7 @@ class AnswerWorker
     response = "HTTP/1.1 200 OK\r\nDate: Tue, 14 Dec 2010 10:48:45 GMT\r\n"
     response += "Server: RubyrnContent-Type: text/html charset=iso-8859-1\r\n\r\n"
 
-    filepath = "#{@serverRoot }#{@request.url}"
+    filepath = "#{@serverRoot }#{@request.request_uri}"
     if File.exists? filepath
       file = File.open filepath
       response += file.read
