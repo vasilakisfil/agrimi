@@ -3,6 +3,7 @@ require 'parseconfig'
 
 require_relative 'goatserver/answer_worker.rb'
 require_relative 'goatserver/request.rb'
+require_relative 'goatserver/response.rb'
 
 class Goatserver
   attr_reader :configPath, :serverRoot, :port

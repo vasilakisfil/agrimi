@@ -30,6 +30,17 @@ describe "Request" do
   end
 end
 
+describe "Response" do
+  before(:all) do
+   @response = Response.new
+  end
+
+  it "'s basic fields initialized correctly" do
+    expect(@response.status_line).to  eq("HTTP/1.1 200 OK")
+    expect(@response.header_field[:Server]).to include("GoatServer")
+  end
+end
+
 describe "Goatserver" do
 
   before :all do

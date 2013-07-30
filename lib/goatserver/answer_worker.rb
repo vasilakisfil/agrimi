@@ -33,18 +33,18 @@ class AnswerWorker
 
   def create_response(client)
 
-    response = "HTTP/1.1 200 OK\r\nDate: Tue, 14 Dec 2010 10:48:45 GMT\r\n"
-    response += "Server: RubyrnContent-Type: text/html charset=iso-8859-1\r\n\r\n"
+    response = Response.new
 
-    filepath = "#{@serverRoot }#{@request.request_uri}"
+    filepath = "#{@serverRoot}#{@request.request_uri}"
     if File.exists? filepath
       file = File.open filepath
-      response += file.read
+      response.body file.read
       file.close
     else
-      response += "Could not find file!"
+      response.body = "Could not find file!"
     end
-    return response
+
+    return response.return_now
   end
 
 end

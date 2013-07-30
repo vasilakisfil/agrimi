@@ -91,6 +91,8 @@ class Request
         header_fields[:Warning] = line.split(/^Warning:\s/)[1]
       end
     end
+
+    return header_fields
   end
 
 end
