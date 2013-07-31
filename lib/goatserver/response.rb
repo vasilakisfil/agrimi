@@ -48,10 +48,6 @@ class Response
     @status_line = "#{@http_version} #{@status_code}"
   end
 
-  def body(body)
-    @body = body
-  end
-
   def return_now
     response = "#{@http_version} #{@status_code}\n"
     header_field.each do |field, value|

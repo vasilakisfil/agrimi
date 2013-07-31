@@ -1,27 +1,29 @@
 require 'socket'
 require 'parseconfig'
+require 'celluloid'
 
-require_relative 'goatserver/answer_worker.rb'
-require_relative 'goatserver/request.rb'
-require_relative 'goatserver/response.rb'
+require_relative 'goatserver/answer_worker'
+require_relative 'goatserver/request'
+require_relative 'goatserver/response'
 
 class Goatserver
-  attr_reader :configPath, :serverRoot, :port
+  attr_reader :config_path, :server_root, :port
+  include Celluloid
 
   def initialize(port)
     @port = port
-    @serverRoot = "/home/vasilakisfil/Development/goat/spec/serverAssets"
+    @server_poot = "/home/vasilakisfil/Development/goat/spec/serverAssets"
   end
 
   def start
     puts "Opening server"
     @server = TCPServer.new(@port)
+    pool = AnswerWorker.pool(size: 2)
     client = nil
     loop do
-      answerWorker = AnswerWorker.new
       client = @server.accept
       # Initiate new Actor to handle the request
-      answerWorker.start(client)
+      pool.start(client)
     end
     stop
   end

@@ -1,11 +1,13 @@
 require 'socket'
+require 'celluloid'
 
 
 class AnswerWorker
-  attr_reader :request, :response, :serverRoot, :client
+  attr_reader :request, :response, :server_root, :client
+  include Celluloid
 
   def initialize
-    @serverRoot = "/home/vasilakisfil/Development/goat/spec/serverAssets"
+    @server_root = "/home/vasilakisfil/Development/goat/spec/serverAssets"
   end
 
   def start(client)
@@ -31,14 +33,14 @@ class AnswerWorker
     Request.new(request)
   end
 
-  def create_response(client)
+  def create_response(request)
 
     response = Response.new
 
-    filepath = "#{@serverRoot}#{@request.request_uri}"
+    filepath = "#{@server_root}#{request.request_uri}"
     if File.exists? filepath
       file = File.open filepath
-      response.body file.read
+      response.body = file.read
       file.close
     else
       response.body = "Could not find file!"
