@@ -4,15 +4,15 @@ require 'rest-client'
 
 
 
-describe "Request" do
+describe Agrimi::Request do
   before(:all) do
     good_req_str = "GET /index.html HTTP/1.1\n"
     good_req_str += "Host: www.example.com\r\n"
-    @good_req = Request.new(good_req_str)
+    @good_req = Agrimi::Request.new(good_req_str)
 
     bad_req_str_meth = "MEH /index.html HTTP/1.1\n"
     bad_req_str_meth += "Host: www.example.com\r\n"
-    @bad_req = Request.new(bad_req_str_meth)
+    @bad_req = Agrimi::Request.new(bad_req_str_meth)
   end
 
   context "with valid data" do
@@ -30,9 +30,9 @@ describe "Request" do
   end
 end
 
-describe "Response" do
+describe Agrimi::Response do
   before(:all) do
-   @response = Response.new
+   @response = Agrimi::Response.new
   end
 
   it "'s basic fields initialized correctly" do
@@ -41,16 +41,17 @@ describe "Response" do
   end
 end
 
-describe "Goatserver" do
+describe Agrimi::HTTPServer do
 
   before :all do
     @serverAssets = "#{Dir.getwd}/spec/serverAssets"
     @port = 5555
     # configFilePath = "#{Dir.getwd}/spec/serverAssets/goat.conf"
-    @server = Goatserver.new(@port)
+    @server = Agrimi::HTTPServer.new(@port)
     Thread.new { @server.start }
     # wait for server to initialize
     sleep(1)
+    @server.stop
   end
 
   after :all do
