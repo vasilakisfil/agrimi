@@ -1,6 +1,7 @@
 require 'socket'
 require 'parseconfig'
 require 'celluloid'
+require 'celluloid/autostart'
 
 require_relative 'agrimi/answer_worker'
 require_relative 'agrimi/request'
@@ -19,12 +20,12 @@ module Agrimi
     def start
       puts "Opening server"
       @server = TCPServer.new(@port)
-      pool = AnswerWorker.pool(size: 2)
+      Celluloid::Actor[:accept_pool] = AnswerWorker.pool(size: 2)
       client = nil
       loop do
         client = @server.accept
         # Initiate new Actor to handle the request
-        pool.start(client)
+        Celluloid::Actor[:accept_pool].start(client)
       end
       stop
     end
@@ -32,6 +33,8 @@ module Agrimi
     def stop
       puts "Closing server"
       @server.close
+      Celluloid::Actor[:accept_pool].terminate
+      exit
     end
   end
 end

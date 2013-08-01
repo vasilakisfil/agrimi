@@ -43,22 +43,18 @@ end
 
 describe Agrimi::HTTPServer do
 
-  before :all do
+  before do
     @serverAssets = "#{Dir.getwd}/spec/serverAssets"
     @port = 5555
-    # configFilePath = "#{Dir.getwd}/spec/serverAssets/goat.conf"
     @server = Agrimi::HTTPServer.new(@port)
-    Thread.new { @server.start }
-    # wait for server to initialize
     sleep(1)
-    @server.stop
-  end
-
-  after :all do
-    @server.stop
   end
 
   context "with full initializer" do
+    before do
+      # configFilePath = "#{Dir.getwd}/spec/serverAssets/goat.conf"
+    end
+
     it "sets the right conf file and port" do
       # expect(@server.serverRoot).to eq("#{Dir.getwd}/spec/serverAssets")
       expect(@server.port).to eq(@port)
@@ -66,6 +62,19 @@ describe Agrimi::HTTPServer do
   end
 
   context "Requesting a page by GET" do
+    before do
+      @server_thread = Thread.new { @server.start }
+      # wait for server to initialize
+      sleep(1)
+    end
+
+    after do
+    #  sleep(1)
+    # @server.stop
+
+      @server_thread.kill
+    end
+
     it "shows the html code" do
       htmlFile = "index.html"
       link = "http://localhost:#{@port}/#{htmlFile}"

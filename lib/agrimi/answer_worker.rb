@@ -38,7 +38,6 @@ module Agrimi
       response = Response.new
 
       filepath = "#{@server_root}#{request.request_uri}"
-      puts filepath
       if File.exists? filepath
         file = File.open filepath
         response.body = file.read
