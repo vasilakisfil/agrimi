@@ -47,7 +47,7 @@ module Agrimi
         response.body = "Could not find file!"
       end
 
-      return response.return_now
+      response.to_s
     end
   end
 end
