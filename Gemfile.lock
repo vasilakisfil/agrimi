@@ -8,8 +8,12 @@ GEM
   specs:
     celluloid (0.14.1)
       timers (>= 1.0.0)
+    celluloid-io (0.14.1)
+      celluloid (>= 0.14.1)
+      nio4r (>= 0.4.5)
     diff-lcs (1.2.4)
     mime-types (1.23)
+    nio4r (0.4.6)
     parseconfig (1.0.2)
     rake (10.1.0)
     rest-client (1.6.7)
@@ -31,6 +35,7 @@ PLATFORMS
 DEPENDENCIES
   agrimi!
   celluloid
+  celluloid-io
   parseconfig
   rake
   rest-client

@@ -1,13 +1,14 @@
 require 'socket'
-require 'celluloid'
+require 'celluloid/io'
+require 'celluloid/autostart'
 
 module Agrimi
   class AnswerWorker
     attr_reader :request, :response, :server_root, :client
-    include Celluloid
+    include Celluloid::IO
 
     def initialize
-      @server_root = "/home/vasilakisfil/Development/agrimi/spec/serverAssets"
+      @server_root = "/home/vasilakisfil/Development/agrimi/spec/server_assets"
     end
 
     def start(client)

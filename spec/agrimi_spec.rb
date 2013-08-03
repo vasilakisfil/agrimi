@@ -2,8 +2,6 @@ require 'spec_helper'
 require 'tempfile'
 require 'rest-client'
 
-
-
 describe Agrimi::Request do
   before(:all) do
     good_req_str = "GET /index.html HTTP/1.1\n"
@@ -43,45 +41,43 @@ end
 
 describe Agrimi::HTTPServer do
 
-  before do
-    @serverAssets = "#{Dir.getwd}/spec/serverAssets"
+  before(:each) do
+    Celluloid.shutdown; Celluloid.boot
+    @server_assets = "#{Dir.getwd}/spec/server_assets"
     @port = 5555
     @server = Agrimi::HTTPServer.new(@port)
-    sleep(1)
+  end
+
+  after(:each) do
+    @server = nil 
   end
 
   context "with full initializer" do
-    before do
-      # configFilePath = "#{Dir.getwd}/spec/serverAssets/goat.conf"
-    end
 
     it "sets the right conf file and port" do
-      # expect(@server.serverRoot).to eq("#{Dir.getwd}/spec/serverAssets")
+      expect(@server.server_root).to eq("#{Dir.getwd}/spec/server_assets")
       expect(@server.port).to eq(@port)
     end
   end
 
   context "Requesting a page by GET" do
     before do
-      @server_thread = Thread.new { @server.start }
+      @server.async.start
       # wait for server to initialize
-      sleep(1)
-    end
-
-    after do
-    #  sleep(1)
-    # @server.stop
-
-      @server_thread.kill
+      sleep(0.1)
     end
 
     it "shows the html code" do
       htmlFile = "index.html"
       link = "http://localhost:#{@port}/#{htmlFile}"
       response = RestClient.get link
-      expect(response.to_str).to eq(File.open("#{@serverAssets}/#{htmlFile}")
+      expect(response.to_str).to eq(File.open("#{@server_assets}/#{htmlFile}")
                                         .read)
     end
-  end
 
+    after do
+      @server.async.stop
+    end
+
+  end
 end
