@@ -5,5 +5,6 @@ A very simple threaded web server.
 
 ###ToDo
 
-1. Study http headers
-2. Add object isolation for better rspecs
+1. <del>Study http headers</del>
+2. <del>Add object isolation for better rspecs</del>
+3. Incorporate PHP parser.
