@@ -14,6 +14,7 @@ module Agrimi
 
     def initialize(port)
       @port = port
+      #@server_root = "/home/vasilakisfil/Development/sofia/"
       @server_root = "/home/vasilakisfil/Development/agrimi/spec/server_assets"
     end
 

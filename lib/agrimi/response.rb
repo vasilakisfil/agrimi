@@ -33,7 +33,7 @@ module Agrimi
       @header_field[:Age] = "0"
       @header_field[:Allow] = "GET"
       @header_field[:'Cache-Control'] = "private, max-age=0"
-      @header_field[:Connection] = "close"
+      @header_field[:Connection] = ""
       # fix that
       @header_field[:'Content-Encoding'] = ""
       @header_field[:'Content-Language'] = "en"
@@ -44,7 +44,7 @@ module Agrimi
       @header_field[:'Content-Disposition'] = ""
       @header_field[:'Content-Range'] = ""
       @header_field[:'Content-Type'] = "text/html; charset=utf-8"
-      @header_field[:Date] = "#{current_time} GMT" 
+      @header_field[:Date] = "#{current_time} GMT"
       @header_field[:ETag] = ""
       @header_field[:Expires] = "-1"
       @header_field[:'Last-Mmodified'] = "#{current_time} GMT"
