@@ -1,5 +1,6 @@
 module Agrimi
-  # Following HTTP protocol naming
+  # Class that holds an HTTP response
+  # Follows HTTP protocol naming
   class Response
     STATUS_CODE = { 100 => "Continue", 101 => "Switching Protocols",
     102 => "Processing", 200 => "OK", 201 => "Created", 202 => "Accepted",
@@ -24,6 +25,8 @@ module Agrimi
 
     attr_accessor :status_line, :http_version, :status_code, :header_field, :body
 
+    # Initializes the most basic fields of the HTTP response
+    # (Any field can be re-configured through header_field method)
     def initialize
       current_time = Time.new.utc.strftime("%a, %d %b %Y %H:%M:%S")
       @http_version = "HTTP/1.1"
@@ -69,6 +72,7 @@ module Agrimi
       @status_line = "#{@http_version} #{@status_code}"
     end
 
+    # Returns a string version of the HTTP response
     def to_s
       response = "#{@http_version} #{@status_code} #{STATUS_CODE[@status_code]}\n"
       header_field.each do |field, value|

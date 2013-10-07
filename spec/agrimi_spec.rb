@@ -33,29 +33,31 @@ describe Agrimi::Response do
    @response = Agrimi::Response.new
   end
 
-  it "'s basic fields initialized correctly" do
+  it " basic fields initialized correctly" do
     expect(@response.status_line).to  eq("HTTP/1.1 200 OK")
     expect(@response.header_field[:Server]).to include("GoatServer")
   end
 end
 
+
+
 describe Agrimi::HTTPServer do
 
   before(:each) do
     Celluloid.shutdown; Celluloid.boot
-    @server_assets = "#{Dir.getwd}/spec/server_assets"
+    @server_root = "#{Dir.getwd}/spec/server_assets"
     @port = 5555
-    @server = Agrimi::HTTPServer.new(@port)
+    @server = Agrimi::HTTPServer.new(@port, @server_root)
   end
 
   after(:each) do
-    @server = nil 
+    @server = nil
   end
 
   context "with full initializer" do
 
     it "sets the right conf file and port" do
-      expect(@server.server_root).to eq("#{Dir.getwd}/spec/server_assets")
+      expect(@server.server_root).to eq(@server_root)
       expect(@server.port).to eq(@port)
     end
   end
@@ -64,20 +66,19 @@ describe Agrimi::HTTPServer do
     before do
       @server.async.start
       # wait for server to initialize
-      sleep(0.1)
+      sleep(1)
     end
 
     it "shows the html code" do
       htmlFile = "index.html"
       link = "http://localhost:#{@port}/#{htmlFile}"
       response = RestClient.get link
-      expect(response.to_str).to eq(File.open("#{@server_assets}/#{htmlFile}")
+      expect(response.to_str).to eq(File.open("#{@server_root}/#{htmlFile}")
                                         .read)
     end
 
     after do
       @server.async.stop
     end
-
   end
 end

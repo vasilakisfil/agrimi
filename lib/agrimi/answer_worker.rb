@@ -1,31 +1,45 @@
 require 'socket'
 require 'celluloid/io'
 require 'celluloid/autostart'
+require 'logger'
 
 module Agrimi
+  # AnswerWorker handles each new request. Currently it handles only one request
+  # per connection but in the future it will implement HTTP keep-alive too.
   class AnswerWorker
     attr_reader :request, :response, :server_root, :client
     include Celluloid::IO
 
+    # Initializes the AnswerWorker
     def initialize
-      @server_root = "/home/vasilakisfil/Development/sofia/"
-      #@server_root = "/home/vasilakisfil/Development/agrimi/spec/server_assets"
+      @logger = ::Logger.new(STDOUT)
+      @logger.level = ::Logger::DEBUG
     end
 
-    def start(client)
+    # Starts the AnswerWorker.
+    #
+    # @param client [tcpsocket] The tcp socket of the client
+    # @param server_root [string] The directory that the server points to
+    def start(client, server_root)
       @client = client
-      loop do
+      @server_root = server_root
+      #loop do
         @request = read_request(@client)
 
         @response = create_response(@request)
 
         client.puts @response
-      end
+      #end
       client.close
     end
 
     private
 
+    # Reads the HTTP request from a tcpsocket
+    #
+    # @param client [tcpsocket] The tcp socket from which the request will
+    # be read
+    # @return [Request] The Request object with the request sring
     def read_request(client)
       request = ""
       while line = client.gets
@@ -35,8 +49,10 @@ module Agrimi
       Request.new(request)
     end
 
+    # Creates a new respons according to the given request
+    # @param request [String] The HTTP request string
+    # @return [Response] The HTTP response as a string
     def create_response(request)
-
       response = Response.new
       response.header_field[:Connection] = ""
       filepath = "#{@server_root}#{request.request_uri}"
