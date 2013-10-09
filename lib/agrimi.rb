@@ -46,12 +46,13 @@ module Agrimi
       stop
     end
 
-    # Stops the server
+    # TO DO Close all sockets for every actor and then close server
+=begin
     def stop
-      @logger.debug "Closing server"
       @tcp_server.close
-      @pool.terminate
+      @logger.debug { "Server Closed" }
     end
+=end
   end
 end
 

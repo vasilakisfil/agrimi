@@ -8,6 +8,7 @@ module Agrimi
     #
     # @param request [String] The request string
     def initialize(request)
+      @full_request = request
       @valid = false
       method, request_uri, http_version = request.lines.first.split " "
       header_fields = request.split("\n")[1..-1]
@@ -24,6 +25,10 @@ module Agrimi
       @valid
     end
 
+    def to_s
+      @full_request
+    end
+
     private
 
     # Method that parses all the HTTP header fields
@@ -31,7 +36,7 @@ module Agrimi
     # @params [Hash]
     def parse_header_fields(fields)
       header_fields = Hash.new
-      header_fields.each do |line|
+      fields.each do |line|
         case line
         when /^Accept:\s/
           header_fields[:Accept] = line.split(/^Accept:\s/)[1]
@@ -103,6 +108,7 @@ module Agrimi
 
       return header_fields
     end
+
 
   end
 end

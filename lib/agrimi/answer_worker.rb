@@ -13,7 +13,7 @@ module Agrimi
     # Initializes the AnswerWorker
     def initialize
       @logger = ::Logger.new(STDOUT)
-      @logger.level = ::Logger::DEBUG
+      @logger.level = ::Logger::INFO
     end
 
     # Starts the AnswerWorker.
@@ -23,13 +23,14 @@ module Agrimi
     def start(client, server_root)
       @client = client
       @server_root = server_root
-      #loop do
+      loop do
         @request = read_request(@client)
+        puts @request.to_s
 
         @response = create_response(@request)
-
-        client.puts @response
-      #end
+        puts @response.header
+        client.puts @response.to_s
+      end
       client.close
     end
 
@@ -92,7 +93,7 @@ module Agrimi
         response.body = "Could not find file!"
       end
 
-      response.to_s
+      return response
     end
   end
 end

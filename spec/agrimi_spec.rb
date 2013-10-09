@@ -43,14 +43,14 @@ end
 
 describe Agrimi::HTTPServer do
 
-  before(:each) do
+  before(:all) do
     Celluloid.shutdown; Celluloid.boot
     @server_root = "#{Dir.getwd}/spec/server_assets"
     @port = 5555
     @server = Agrimi::HTTPServer.new(@port, @server_root)
   end
 
-  after(:each) do
+  after(:all) do
     @server = nil
   end
 
@@ -77,8 +77,5 @@ describe Agrimi::HTTPServer do
                                         .read)
     end
 
-    after do
-      @server.async.stop
-    end
   end
 end

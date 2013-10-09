@@ -69,15 +69,23 @@ module Agrimi
       @header_field[:Warning] = ""
       @header_field[:'WWW-Authenticate'] = ""
 
-      @status_line = "#{@http_version} #{@status_code}"
+      @status_line = "#{@http_version} #{@status_code}
+                      #{STATUS_CODE[@status_code]}\n"
+    end
+
+    def header
+      @header = ""
+      @header_field.each do |field, value|
+        @header += "#{field}: #{value}\n" if !value.empty?
+      end
+
+      return @header
     end
 
     # Returns a string version of the HTTP response
     def to_s
-      response = "#{@http_version} #{@status_code} #{STATUS_CODE[@status_code]}\n"
-      header_field.each do |field, value|
-        response += "#{field}: #{value}\n" if !value.empty?
-      end
+      response = @status_line
+      response += header
       response += "\n"
       response += "#{@body}"
       return response
