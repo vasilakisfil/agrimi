@@ -23,14 +23,13 @@ module Agrimi
     def start(client, server_root)
       @client = client
       @server_root = server_root
-      loop do
+      #loop do
         @request = read_request(@client)
         puts @request.to_s
 
         @response = create_response(@request)
-        puts @response.header
         client.puts @response.to_s
-      end
+      #end
       client.close
     end
 

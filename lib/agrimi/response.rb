@@ -23,7 +23,8 @@ module Agrimi
     501 => "Not Implemented", 502 => "Bad Gateway", 503 => "Service Unavailable",
     504 => "Gateway Timeout", 505 => "HTTP Version Not Supported" }
 
-    attr_accessor :status_line, :http_version, :status_code, :header_field, :body
+    attr_accessor :status_line, :http_version, :status_code, :header_field,
+      :body, :header_fields
 
     # Initializes the most basic fields of the HTTP response
     # (Any field can be re-configured through header_field method)
@@ -60,7 +61,7 @@ module Agrimi
       @header_field[:'Retry-After'] = "60"
       @header_field[:Server] = "GoatServer 0.0001 (Unix)"
       @header_field[:'Set-Cookie'] = ""
-      @header_field[:Status] = @status_code =  "200 OK"
+      @header_field[:Status] = @status_code =  200
       @header_field[:'Strict-Transport-Security'] = ""
       @header_field[:Trailer] = ""
       @header_field[:'Transfer-Encoding'] = ""
@@ -69,26 +70,19 @@ module Agrimi
       @header_field[:Warning] = ""
       @header_field[:'WWW-Authenticate'] = ""
 
-      @status_line = "#{@http_version} #{@status_code}
-                      #{STATUS_CODE[@status_code]}\n"
+      @status_line = "#{@http_version} #{@status_code} #{STATUS_CODE[@status_code]}"
     end
 
-    def header
-      @header = ""
+    def headeri_fields
+      @header_fields = ""
       @header_field.each do |field, value|
-        @header += "#{field}: #{value}\n" if !value.empty?
+        @header_fields += "#{field}: #{value}\n" if !value.empty?
       end
-
-      return @header
     end
 
     # Returns a string version of the HTTP response
     def to_s
-      response = @status_line
-      response += header
-      response += "\n"
-      response += "#{@body}"
-      return response
+      response = "#{@status_line}\n#{@header_fields}\n#{@body}"
     end
   end
 end
