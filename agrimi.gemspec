@@ -4,12 +4,12 @@ require 'agrimi/version'
 
 Gem::Specification.new do |s|
   s.name          = "agrimi"
-  s.version       = "0.0.0" 
+  s.version       = "0.0.0"
   s.authors       = ["Filippos Vasilakis"]
   s.email         = ["vasilakisfil@gmail.com"]
 
   s.summary       = "A simple yet powerfull loosely coupled
-                    distributed thread-based http server"
+                    thread-based http server"
   s.description   = ""
   s.homepage      = "http://github.com/vasilakisfil/"
 

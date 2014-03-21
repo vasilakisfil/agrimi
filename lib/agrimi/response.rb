@@ -24,7 +24,7 @@ module Agrimi
     504 => "Gateway Timeout", 505 => "HTTP Version Not Supported" }
 
     attr_accessor :status_line, :http_version, :status_code, :header_field,
-      :body, :header_fields
+      :body
 
     # Initializes the most basic fields of the HTTP response
     # (Any field can be re-configured through header_field method)
@@ -61,7 +61,7 @@ module Agrimi
       @header_field[:'Retry-After'] = "60"
       @header_field[:Server] = "GoatServer 0.0001 (Unix)"
       @header_field[:'Set-Cookie'] = ""
-      @header_field[:Status] = @status_code =  200
+      @header_field[:Status] = @status_code =  "200"
       @header_field[:'Strict-Transport-Security'] = ""
       @header_field[:Trailer] = ""
       @header_field[:'Transfer-Encoding'] = ""
@@ -70,14 +70,15 @@ module Agrimi
       @header_field[:Warning] = ""
       @header_field[:'WWW-Authenticate'] = ""
 
-      @status_line = "#{@http_version} #{@status_code} #{STATUS_CODE[@status_code]}"
+      @status_line = "#{@http_version} #{@status_code} #{STATUS_CODE[@status_code.to_i]}"
     end
 
-    def headeri_fields
+    def header_fields
       @header_fields = ""
       @header_field.each do |field, value|
         @header_fields += "#{field}: #{value}\n" if !value.empty?
       end
+      return @header_fields
     end
 
     # Returns a string version of the HTTP response

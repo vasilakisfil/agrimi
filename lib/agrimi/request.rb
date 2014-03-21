@@ -20,7 +20,8 @@ module Agrimi
       @header_fields = parse_header_fields(header_fields)
     end
 
-    # @return [boolean] Boolean that indicates whether the request has a valid structure
+    # @return [boolean] Boolean that indicates whether the request has a valid
+    # structure
     def valid?
       @valid
     end

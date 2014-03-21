@@ -28,6 +28,7 @@ module Agrimi
         puts @request.to_s
 
         @response = create_response(@request)
+        puts @response.header_fields
         client.puts @response.to_s
       #end
       client.close
@@ -54,7 +55,6 @@ module Agrimi
     # @return [Response] The HTTP response as a string
     def create_response(request)
       response = Response.new
-      response.header_field[:Connection] = ""
       filepath = "#{@server_root}#{request.request_uri}"
       if File.exists? filepath
         case request.request_uri
