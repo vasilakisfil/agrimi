@@ -27,8 +27,16 @@ module Agrimi
       "#{http_version} #{@status} #{STATUS_CODE[@status.to_i]}"
     end
 
+    def full_body
+      output = ''
+      @body.each do |part|
+        output << part
+      end
+      return output
+    end
+
     def to_s
-      response = "#{@status_line}\n#{@header_fields}\n#{@body}"
+      response = "#{status_line}\n#{header_fields}\n#{full_body}"
     end
 
 

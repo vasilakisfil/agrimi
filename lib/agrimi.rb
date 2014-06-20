@@ -31,10 +31,7 @@ module Agrimi
 
     # Starts the server ready to accept new connections
     def start
-      @logger.debug { "Opening server" }
       @tcp_server = TCPServer.new("0.0.0.0", @port)
-      @logger.debug { "Listening to 0.0.0.0 port #{@port}
-                      pointing #{@server_root}" }
       @pool = AnswerWorker.pool(size: 2)
       answer_worker = AnswerWorker.new
       client = nil
