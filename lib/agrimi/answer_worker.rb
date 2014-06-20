@@ -26,11 +26,12 @@ module Agrimi
 
       @request = read_request(@client)
 
+      p @request.rack_env
 
       status, headers, body = Agrimi::HTTPServer.app.call(@request.rack_env)
 
       response = Response.new(status, headers, body)
-      puts response.to_s
+
       client.puts response.to_s
 
       client.close

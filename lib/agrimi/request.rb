@@ -17,6 +17,13 @@ module Agrimi
                                                       http_version, true
       end
 
+      if @request_uri.include? '?'
+        @path_info, @query_string = @request_uri.split('?', 2)
+      else
+        @path_info = @request_uri
+        @query_string = ''
+      end
+
       @header_fields = parse_header_fields(header_fields)
     end
 
@@ -30,28 +37,30 @@ module Agrimi
       @full_request
     end
 
+
     def rack_env
       env = Hash.new
       env['REQUEST_METHOD'] = @method
       env['SCRIPT_NAME'] = '' #@request_uri
-      env['PATH_INFO'] = @request_uri
-      env['QUERY_STRING'] = ''
+      env['PATH_INFO'] = @path_info
+      env['QUERY_STRING'] = @query_string
       env['SERVER_NAME'] = 'localhost'
       env['SERVER_PORT'] = '8000'
 
-      rack_input = StringIO.new('lalala')
+      rack_input = StringIO.new('lalala').to_s
       rack_input.set_encoding(Encoding::BINARY) if rack_input.respond_to?(:set_encoding)
 
-      env.update({"rack.version" => Rack::VERSION,
-                     "rack.input" => rack_input,
-                     "rack.errors" => $stderr,
+      env.update({
+        "rack.version" => Rack::VERSION,
+        "rack.input" => rack_input,
+        "rack.errors" => $stderr,
 
-                     "rack.multithread" => false,
-                     "rack.multiprocess" => false,
-                     "rack.run_once" => false,
+        "rack.multithread" => false,
+        "rack.multiprocess" => false,
+        "rack.run_once" => false,
 
-                     "rack.hijack?" => false,
-                   })
+        "rack.hijack?" => false,
+      })
       return env
     end
 
