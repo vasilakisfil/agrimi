@@ -21,7 +21,8 @@ module Agrimi
     #
     # @param port [Integer] The port the server listens to
     # @param server_root [String] The directory the server points to
-    def initialize(port, server_root)
+    def initialize(port, server_root, app = nil)
+      @@app = app
       @logger = ::Logger.new(STDOUT)
       @logger.level = ::Logger::DEBUG
       @port = port
@@ -53,6 +54,9 @@ module Agrimi
       @logger.debug { "Server Closed" }
     end
 
+    def self.app
+      @@app
+    end
   end
 end
 

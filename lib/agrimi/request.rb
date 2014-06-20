@@ -30,6 +30,18 @@ module Agrimi
       @full_request
     end
 
+    def rack_env
+      env = Hash.new
+      env['REQUEST_METHOD'] = @method
+      env['SCRIPT_NAME'] = '' #@request_uri
+      env['PATH_INFO'] = @request_uri
+      env['QUERY_STRING'] = ''
+      env['SERVER_NAME'] = 'localhost'
+      env['SERVER_PORT'] = '8000'
+
+      return env
+    end
+
     private
 
     # Method that parses all the HTTP header fields

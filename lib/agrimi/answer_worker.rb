@@ -23,14 +23,15 @@ module Agrimi
     def start(client, server_root)
       @client = client
       @server_root = server_root
-      #loop do
-        @request = read_request(@client)
-        puts @request.to_s
 
-        @response = create_response(@request)
-        puts @response.header_fields
-        client.puts @response.to_s
-      #end
+      @request = read_request(@client)
+      puts @request.to_s
+
+      status, headers, body = Agrimi::HTTPServer.app.call(@request.rack_env)
+
+      response = Response.new(status, headers, body)
+      client.puts response.to_s
+
       client.close
     end
 
