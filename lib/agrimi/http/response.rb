@@ -1,4 +1,4 @@
-module Agrimi
+module Agrimi::HTTP
   # Class that holds an HTTP response
   # Follows HTTP protocol naming
   class Response

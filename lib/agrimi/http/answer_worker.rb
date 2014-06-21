@@ -3,7 +3,7 @@ require 'celluloid/io'
 require 'celluloid/autostart'
 require 'logger'
 
-module Agrimi
+module Agrimi::HTTP
   # AnswerWorker handles each new request. Currently it handles only one request
   # per connection but in the future it will implement HTTP keep-alive too.
   class AnswerWorker
@@ -28,7 +28,7 @@ module Agrimi
 
       p @request.rack_env
 
-      status, headers, body = Agrimi::HTTPServer.app.call(@request.rack_env)
+      status, headers, body = Agrimi::HTTP::Server.app.call(@request.rack_env)
 
       response = Response.new(status, headers, body)
 

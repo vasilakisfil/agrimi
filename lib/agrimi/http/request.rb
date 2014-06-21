@@ -1,4 +1,4 @@
-module Agrimi
+module Agrimi::HTTP
   # This class handles the HTTP requests
   # It follows the HTTP protocol naming
   class Request
@@ -47,7 +47,7 @@ module Agrimi
       env['SERVER_NAME'] = 'localhost'
       env['SERVER_PORT'] = '8000'
 
-      rack_input = StringIO.new('lalala').to_s
+      rack_input = StringIO.new
       rack_input.set_encoding(Encoding::BINARY) if rack_input.respond_to?(:set_encoding)
 
       env.update({
