@@ -65,5 +65,50 @@ module Agrimi
     def to_s
       response = "#{@status_line}\n#{@header_fields}\n#{@body}"
     end
+
+    # Creates a new respons according to the given request
+    # @param request [String] The HTTP request string
+    # @return [Response] The HTTP response as a string
+    def create_response(request)
+      response = Response.new
+      filepath = "#{@server_root}#{request.request_uri}"
+      if File.exists? filepath
+        case request.request_uri
+        when /\.(?:html)$/i
+          file = File.open filepath
+          response.body = file.read
+          response.header_field[:'Content-Type'] = "text/html; charset=utf-8"
+          file.close
+        when /\.(?:css)$/i
+          file = File.open filepath
+          response.body = file.read
+          response.header_field[:'Content-Type'] = "text/css"
+          file.close
+        when /\.(?:js)$/i
+          file = File.open filepath
+          response.body = file.read
+          response.header_field[:'Content-Type'] = "text/javascript"
+          file.close
+        when /\.(?:jpg)$/i
+          file = File.open(filepath, "rb")
+          response.body = file.read
+          response.header_field[:'Accept-Ranges'] = "bytes"
+          response.header_field[:'Content-Type'] = "image/jpeg"
+          file.close
+        when /\.(?:png)$/i
+          file = File.open(filepath, "rb")
+          response.body = file.read
+          response.header_field[:'Accept-Ranges'] = "bytes"
+          response.header_field[:'Content-Type'] = "image/png"
+          file.close
+        else
+          response.body = "Wrong file!"
+        end
+      else
+        response.body = "Could not find file!"
+      end
+
+      return response
+    end
   end
 end
