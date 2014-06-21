@@ -1,10 +1,11 @@
 #GoatServer
 
-A very simple threaded web server.
+A very simple threaded web server. It is Rack compliant (tested with Sinatra and Rails).
 
 
 ###ToDo
 
-1. <del>Study http headers</del>
-2. <del>Add object isolation for better rspecs</del>
-3. Incorporate PHP parser.
+1. Add support for PUT PATCH HTTP methods
+3. Add support for websockets
+4. Optimize concurrency
+5. Benchmark
